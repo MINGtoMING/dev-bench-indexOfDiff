@@ -4,18 +4,12 @@ pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    const zbench_mod = b.dependency("zbench", .{
-        .target = target,
-        .optimize = optimize,
-    }).module("zbench");
-
     const exe_mod = b.createModule(.{
         .root_source_file = b.path("src/main.zig"),
         .target = target,
         .optimize = optimize,
     });
 
-    exe_mod.addImport("zbench", zbench_mod);
     const exe = b.addExecutable(.{
         .name = "main",
         .root_module = exe_mod,
